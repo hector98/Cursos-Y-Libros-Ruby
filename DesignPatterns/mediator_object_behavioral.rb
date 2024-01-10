@@ -1,4 +1,4 @@
-# Design Pattern: Mediator
+#w Design Pattern: Mediator
 # Behavioral
 
 # Sample Code:
@@ -21,4 +21,13 @@ class DialogDirector
   def created_widgets
     raise NotImplementedError, "Debes implementar el método 'created_widgets' en la subclase"
   end
+end
+
+class Widget
+  self(DialogDirector)
+  
+  def changed
+  end
+
+#TODO: Implementar métodos
 end
