@@ -28,7 +28,6 @@ end
 # Definir las class abstractas para la fabrica
 class AbstractFurnitureFactory
   def create_sofa(name, material)
-    puts "_#{self}"
     raise NotImplementedError, "#{self.class} no implementa el método 'create_sofa'"
   end
 
@@ -39,21 +38,21 @@ end
 
 # Definir las fabricas concretas para cada marca
 class ModernFurnitureFactory < AbstractFurnitureFactory
-  def create_Sofa(name, material)
+  def create_sofa(name, material)
     ModernSofa.new(name, material)
   end
 
-  def create_Mesa(name, material)
+  def create_mesa(name, material)
     ModernMesa.new(name, material)
   end
 end
 
 class ClassicFurnitureFactory < AbstractFurnitureFactory
-  def create_Sofa(name, material)
+  def create_sofa(name, material)
     ClassicSofa.new(name, material)
   end
 
-  def create_Mesa(name, material)
+  def create_mesa(name, material)
     ClassicMesa.new(name, material)
   end
 end
@@ -81,8 +80,8 @@ factory = ClassicFurnitureFactory.new
 
 # Crea el sofa y la mesa con la fabrica elejida
 sofa = factory.create_sofa("Sofa moderno", "Madera")
-#mesa = factory.create_mesa("Mesa moderna", "Madera")
+mesa = factory.create_mesa("Mesa moderna", "Madera")
 
 # Imprime la descripción de los productos
 puts sofa.describe
-#puts mesa.describe
+puts mesa.describe
