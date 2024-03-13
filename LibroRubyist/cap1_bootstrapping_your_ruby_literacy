@@ -1,8 +1,0 @@
-# Libro The Well-Grounded Rubyist
-# Capitulo 1
-# Bootstrapping Your Ruby Literacy
-
-# Valid variable names in Ruby by variable type
-firts_name = "Hector" # Local variable
-@first_name = "Hector" # Instance variable
-$first_name = "Hector" # Global variable
