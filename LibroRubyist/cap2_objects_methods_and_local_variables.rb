@@ -61,3 +61,10 @@ puts "This ticket is for: #{ticket.event}, at #{ticket.venue}. \n" +
   "The performer is #{ticket.performer}. \n" +
   "The seat is #{ticket.seat}, " +
   "and it costs $#{"%.2f" % ticket.price}."
+
+# Identifying the objects uniquely with the object_id method
+obj = Object.new
+puts "The id of obj is #{obj.object_id}."
+str = "Strings are obnjects too, and this is a string!"
+puts "The id of the string object str is #{str.object_id}."
+puts "And the id of the integer 100 is #{100.object_id}."
