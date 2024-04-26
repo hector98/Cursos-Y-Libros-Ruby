@@ -68,3 +68,73 @@ puts "The id of obj is #{obj.object_id}."
 str = "Strings are obnjects too, and this is a string!"
 puts "The id of the string object str is #{str.object_id}."
 puts "And the id of the integer 100 is #{100.object_id}."
+
+# Querying an object's abilities with the respond_to? method
+obj = Object.new
+
+if obj.respond_to?("talk")
+  obj.talk
+else
+  puts "Sorry, the object doesn't understand the 'talk' message."
+end
+
+# Required and optioal arguments
+obj = Object.new
+def obj.multi_args(*x)
+  puts "I can take zero or more arguments!"
+end
+
+def two_or_more(a, b, *c)
+  puts "I requiere two or more arguments!"
+  puts "And sure enough, I got: "
+  p a, b, c
+end
+
+# Default values for arguments
+def default_args(a, b, c=1)
+  puts "Values of variables: ", a, b, c
+end
+default_args(3, 2)
+
+# Order of parameters and arguments
+def mixed_args(a, b, *c, d)
+  puts "Argumets:"
+  p a, b, c, d
+end
+mixed_args(1, 2, 3, 4, 5)
+
+def args_unleashed(a, b=1, *c, d, e)
+  p a, b, c, d, e
+end
+args_unleashed(1, 2, 3, 4, 5)
+
+# Local variables and variable assignments 
+def say_goodbye
+  x = "Goodbye"
+  puts x
+end
+
+def start_here
+  x = "Hello"
+  puts x
+  say_goodbye
+  puts "Let's check whether x remainded the same:"
+  puts x
+end
+start_here
+
+# Variables, objects, and references
+str = "Hello"
+abc = str
+puts abc
+
+str.replace("Goodbye")
+
+def say_goodbye
+  str = "Hello"
+  abc = str
+  str.replace("Goodbye")
+  puts str
+  puts abc
+end
+say_goodbye
