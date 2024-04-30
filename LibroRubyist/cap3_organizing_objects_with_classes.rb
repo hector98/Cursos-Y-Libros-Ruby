@@ -59,3 +59,34 @@ puts "We've created two tickets."
 puts "The first is for a #{th.venue} even on #{th.date}."
 puts "The second is for an event on #{cc.venue} at #{cc.date}."
 
+# Setter methods unleashed
+class Silly
+  def price=(x)
+    puts "The current time is #{Time.now}."
+  end
+end
+s = Silly.new
+s.price = 111.22
+
+# Exercises 1
+class Ticket
+  def initialize(venue)
+    @venue = venue
+  end
+
+  def set_price(price)
+    @price = price
+  end
+
+  def price
+    @price
+  end
+
+  def discount(amount)
+    @price - (@price * (amount * 0.01))
+  end
+end
+tk = Ticket.new("Town Hall")
+tk.set_price(100)
+puts "The ticket for #{tk.venue} has been discounted 15% to #{tk.discount(15)}."
+
