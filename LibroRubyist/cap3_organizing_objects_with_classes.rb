@@ -90,3 +90,90 @@ tk = Ticket.new("Town Hall")
 tk.set_price(100)
 puts "The ticket for #{tk.venue} has been discounted 15% to #{tk.discount(15)}."
 
+# Autumating the creation of attributes
+# Listing 3.2. Ticket class, with the attribute reader/writer methods spelled out.
+class Ticket
+  def initialize(venue, date)
+    @venue = venue
+    @date = date
+  end
+
+  def price(price)
+    @price = price
+  end
+
+  def venue
+    @venue
+  end
+
+  def date
+    @date
+  end
+
+  def price
+    @price
+  end
+end
+
+# Listing 3.3. Ticket class, with getter and setter methods defined via sttr *calls.
+class Ticket  
+  attr_reader :venue, :date, :price
+  attr_write :price
+
+  def initialize(venue, date)
+    @venue = venue
+    @date = date
+  end
+end
+
+# Inheritance and the Ruby class hirarchy
+class Plublication
+  attr_accessor :publisher
+end
+
+class Magazine < Publication
+  attr_accessor :editor
+end
+mag = Magazine.new
+mag.publisher = "David A. Black"
+mag.editor = "Joe Leo"
+puts "Mag is published by #{mag.publisher} and edited by #{mag.editor}."
+
+class Person
+  def species
+    "Homo Sapiens"
+  end
+end
+class Rubyist < Person
+end
+hector = Rubyist.new
+puts hector.species
+
+# Object ancestry and the not-so-missing link: the Object class
+obj= Object.new
+
+class C
+end
+class D < C
+end
+puts D.superclass
+puts D.superclass.superclass
+
+# Basic use of constants
+class Ticket
+  VENUES = ["Convetion Center", "Fairgrounds", "Town Hall"]
+
+  def initialize(venue, date)
+    if VENUES.include?(venue) # Is This one of the known venues?
+      @venue = venue
+    else
+      raise ArgumentError, "Unknown venue: #{venue}" # Raises an exception (fatal error--see chap. 6).
+    end
+
+    @date = date
+  end
+end
+puts "We've closed the class definition."
+puts "So we have to use the path notation to reach the constant."
+puts "The venues are:"
+puts Ticket::VENUES
