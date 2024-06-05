@@ -112,3 +112,206 @@ class C
 end
 c = C.new
 c.examine_global
+
+# Local scope
+class C
+  a = 1
+  def local_a
+    a = 2
+    puts a
+  end
+  puts a
+end
+c = C.new
+c.local_a
+
+# Listing 5.4. Reusing a variable name in nested local scopes
+class C
+  a = 5
+  module M
+    a = 4
+    module N
+      a = 3
+      class D
+        a = 2
+        def show_a
+          a = 1
+          puts a
+        end
+        puts a
+      end
+      puts a
+    end
+    puts a
+  end
+  puts a
+end
+d = C::M::N::D.new
+d.show_a
+
+# Listing 5.5. Demostrating the generation of a new local scope per method call
+class C
+  def x(value_for_a.recurse = false)
+    a = value_for_a
+    print "Here's the inspect-string for 'self':"
+    p self
+    puts "And Here's a:"
+    puts a
+    
+    if recurse
+      puts "Calling myself (recursion)..."
+      x("Second value for a")
+      puts "Back after recurcion; here's a:"
+      puts a
+    end
+  end
+end
+c = C.new
+c.x("First value for a", true)
+
+# Scope and resolution constants
+module M
+  class C
+    class D
+      module N
+        X = 1
+      end
+    end
+  end
+end
+puts M::C::D::N::X
+puts M::C::X
+
+# Listing 5.6. Keeping track of car manufacturing
+# statics with class variables
+class Car
+  @@makes = []
+  @@cars = {}
+  @@total_count = 0
+  attr_reader :make
+  
+  def self.total_count
+    @@total_count
+  end
+
+  def self.add_make(make)
+    unless @@makes.include?(make)
+      @@makes << make
+      @@cars[make] = 0
+    end
+  end
+
+  def initialize(make)
+    if @@makes.include?(make)
+      puts "Creating a new #{make} !"
+      @make = make
+      @@cars[make] += 1
+      @@total_count += 1
+    else
+      raise "No such make: #{make}."
+    end
+  end
+
+  def make_mates
+    @@cars[self.make]
+  end
+end
+
+# Listing 5.7 Car with @@total_count remplaced by
+# instance variable @total_count
+class Car
+  @@makes = []
+  @@cars = {}
+  attr_reader :make
+
+  def self.total_count
+    @total_count ||= 0
+  end
+
+  def self.total_count=(n)
+    @total_count = n
+  end
+
+  def self.add_make(make)
+    unless @@makes.include?(make)
+      @@makes << make
+      @@cars[make] = 0
+    end
+  end
+
+  def initialize(make)
+    if @@makes.include?(make)
+      puts "Creating a new #{make}!"
+      @make = make
+      @@cars[make] += 1
+      self.class.total_count += 1
+    else
+      raise "No such make: #{make}."
+    end
+  end
+
+  def make_mates
+    @@cars[self.make]
+  end
+end
+
+# Listing 5.8 Baker and other baking domain classes
+class Cake
+  def initialize(better)
+    @better = better
+    @baked = true
+  end
+end
+
+class Egg
+end
+
+class Flour
+end
+
+class Baker
+  def bake_cake
+    @batter = []
+    pour_flour
+    add_egg
+    stir_batter
+    return Cake.new(@batter)
+  end
+
+  private
+  
+  def pour_flour
+    @batter.push(Flour.new)
+  end
+
+  def add_egg
+    @batter.push(Egg.new)
+  end
+
+  def stir_batter
+  end
+end
+
+# Listing 5.9 Example of a protected method and its use
+class C
+  def intialize(n)
+    @n = n
+  end
+
+  def n
+    @n
+  end
+  
+  def compare(c)
+    if c.n > n
+      puts "The other object's n is bigger."
+    else
+      puts "The other object's n is the same or smaller."
+    end
+  end
+  protected :n
+end
+c1 = C.new(100)
+c2 = C.new(101)
+c1.compare(c2)
+
